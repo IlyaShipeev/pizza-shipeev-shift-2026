@@ -11,7 +11,7 @@ function App() {
 
 
   return (
-    <Provider store = {store}>
+    <Provider store = {store}>  кто уже начал делать задания учитывайте, что к пути картинки нужно добавить
       <ThemeProvider theme= {theme}>
         <CssBaseline /> 
         <BrowserRouter>
