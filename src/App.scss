@@ -1,4 +1,25 @@
 :root {
-  --primary-color: #F4511E;
-  --text-color: #141C24
+    --primary-color: #f4511e;
+    --text-color: #141c24;
+}
+@font-face {
+    font-family: "Inter";
+    src: url("./assets/fonts/Regular.ttf") format("woff2");
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Inter";
+    src: url("./assets/fonts/SemiBold.ttf") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Inter";
+    src: url("./assets/fonts/Medium.ttf") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
 }
