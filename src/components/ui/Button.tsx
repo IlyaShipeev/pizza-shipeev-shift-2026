@@ -11,6 +11,7 @@ const ContentButton: React.FC<ButtonProps> = (props) => {
             variant="contained"
             disableElevation
             disableRipple
+            {...props}
             sx={{
                 backgroundColor: "#F4511E",
                 color: "#FFFFFF",

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./ProductCard.module.scss";
 import {
     Card,
@@ -13,20 +13,14 @@ import {
 } from "@mui/material";
 import type { ProductDto } from "../../types/catalog.types";
 import ContentButton from "../ui/Button";
+import ProductPopup from "../ProductPopup/ProductPopup";
 interface ProductCardProps {
     product: ProductDto;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-    const {
-        name,
-        description,
-        sizes,
-        isNew,
-        isHit,
-        isVegetarian,
-        isGlutenFree,
-    } = product;
+    const { name, description, sizes, img } = product;
+    const [popupOpen, setPopupOpen] = useState(false);
 
     const basePrice = sizes?.[0]?.price ?? 0;
 
@@ -38,18 +32,25 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                 flexDirection: "column",
                 boxShadow: "0",
                 backgroundColor: "white",
+                gap: "24px",
                 overflow: "hidden",
             }}
         >
-            <Box sx={{ position: "relative" }}>
+            <Box
+                sx={{
+                    display: "flex",
+                    height: "220px",
+                    width: "220px",
+                    margin: "0 auto",
+                }}
+            >
                 <CardMedia
                     component="img"
-                    height="220"
-                    image={`https://shift-intensive.ru${product.img}`}
+                    image={img}
                     alt={name}
                     sx={{
-                        objectFit: "cover",
-                        transition: "transform 0.4s ease",
+                        maxWidth: "100%",
+                        maxHeight: "100%",
                     }}
                 />
             </Box>
@@ -60,7 +61,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     flex: 1,
                     display: "flex",
                     flexDirection: "column",
-                    padding:0
+                    padding: 0,
                 }}
             >
                 <Box
@@ -68,8 +69,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                         flex: 1,
                         display: "flex",
                         flexDirection: "column",
-                        gap: "8px",
                         paddingBottom: "24px",
+                        gap: "8px",
                     }}
                 >
                     <Typography variant="h3" sx={{ color: "black" }}>
@@ -78,22 +79,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
                     {description && (
                         <Typography
-                            
                             sx={{
                                 color: "#344051",
-                                flexGrow: 1,
                                 fontSize: 16,
                                 display: "-webkit-box",
-                                WebkitLineClamp: 4,
+
                                 WebkitBoxOrient: "vertical",
                                 overflow: "hidden",
                                 lineHeight: 1.5,
                             }}
                         >
-                            {/* make !!!fonts like in header*/}
-                            {description.length > 80
-                                ? description.slice(0, 77) + "..."
-                                : description}
+                            {description}
                         </Typography>
                     )}
                 </Box>
@@ -109,16 +105,25 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                     </Typography>
 
                     <ContentButton
-                        fullWidth
                         onClick={(e) => {
-                            e.stopPropagation();
-                            console.log("Добавлена в корзину:", name);
+                            setPopupOpen(true);
                         }}
                     >
                         Выбрать
                     </ContentButton>
                 </Box>
             </CardContent>
+            {popupOpen && (
+                <ProductPopup
+                    product={product}
+                    open={popupOpen}
+                    onClose={() => setPopupOpen(false)}
+                    onAddToCart={(selection) => {
+                        console.log("Добавлено в корзину:", selection);
+                        // Здесь будет логика добавления в корзину
+                    }}
+                />
+            )}
         </Card>
     );
 };

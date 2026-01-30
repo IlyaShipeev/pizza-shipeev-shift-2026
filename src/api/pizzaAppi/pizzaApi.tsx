@@ -13,9 +13,6 @@ export const PizzaListApi = {
                     { signal },
                 );
                 console.log("Сырой axios response:", response);
-                console.log("response.status:", response.status);
-                console.log("response.headers:", response.headers);
-                console.log("response.data тип:", typeof response.data);
                 console.log("response.data целиком:", response.data);
                 return response.data;
             },
