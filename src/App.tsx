@@ -9,7 +9,8 @@ import { ROUTES } from './constants/routes'
 import Header from './components/Header/Header'
 import HomePage from './pages/HomePage/HomePage'
 import './App.scss'
-
+import { AuthLayout } from './layouts/AuthLayout/AuthLayout'
+import {MainLayout} from './layouts/MainLayout/MainLayout'
 function App() {
 
 
@@ -27,8 +28,7 @@ function App() {
             <Route path={ROUTES.PROFILE} element= {<div>Profile</div>} /> 
             <Route path={ROUTES.ORDERS} element= {<div>Orders</div>} />
             <Route path={ROUTES.CART} element= {<div>Cart</div>} />
-            <Route path={ROUTES.LOGIN} element= {<div>Login</div>} />
-            <Route path={ROUTES.REGISTER} element= {<div>Register</div>} />
+            </Route>
           </Routes> 
           </main>
         </div>
