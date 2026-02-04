@@ -18,6 +18,8 @@ import type {
 } from "../../types/catalog.types";
 import CustomTabs from "../Tabs/CustomTabs";
 import ToppingCard from "../ToppingCard/ToppingCard";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../store/slices/cart/cartSlice";
 
 interface ProductPopupProps {
     product: ProductDto;
@@ -33,6 +35,7 @@ interface ProductSelection {
     selectedIngredients: IngredientDto[];
     quantity: number;
     totalPrice: number;
+    img: string;
 }
 
 const ProductPopup: React.FC<ProductPopupProps> = ({
@@ -49,7 +52,7 @@ const ProductPopup: React.FC<ProductPopupProps> = ({
         [],
     );
     const [quantity, setQuantity] = useState(1);
-
+    const dispatch = useDispatch();
     const calculateTotalPrice = () => {
         const basePrice = selectedSize.price;
         const doughPrice = selectedDough.price;
@@ -69,15 +72,20 @@ const ProductPopup: React.FC<ProductPopupProps> = ({
     };
 
     const handleAddToCart = () => {
-        const selection: ProductSelection = {
-            product,
-            selectedSize,
-            selectedDough,
-            selectedIngredients: selectedToppings,
+        const cartItem = {
+            id: product.id,
+            productId: product.id,
+            name: product.name,
+            size: selectedSize.type,
+            dough: selectedDough.type,
+            toppings: selectedToppings.map((i) => i.type),
             quantity,
-            totalPrice: calculateTotalPrice(),
+            price: selectedSize.price + selectedDough.price,
+            total: calculateTotalPrice(),
+            img: product.img,
         };
-        onAddToCart(selection);
+
+        dispatch(addToCart(cartItem));
         onClose();
     };
 
@@ -248,7 +256,10 @@ const ProductPopup: React.FC<ProductPopupProps> = ({
                                             size={{ xs: 6, sm: 3, md: 4 }}
                                             key={topping.type}
                                         >
-                                            <ToppingCard topping={topping} />
+                                            <ToppingCard
+                                                topping={topping}
+                                                onClick={()=>toggleTopping(topping)}
+                                            />
                                         </Grid>
                                     ))}
                                 </Grid>

@@ -8,12 +8,15 @@ import {
 } from "@mui/material";
 import type { ToppingDto } from "../../types/catalog.types";
 
-interface ProductCardProps {
+interface ToppingCardProps {
     topping: ToppingDto;
-    onClick?: () => void;
+    onClick?: (topping: ToppingDto) => void;
 }
 
-const ToppingCard: React.FC<ProductCardProps> = ({ topping, onClick }) => {
+function ToppingCard({ topping, onClick }: ToppingCardProps) {
+    const handleClick = () => {
+        onClick?.(topping); // ← передаем topping при клике
+    };
     return (
         <Card
             sx={{
@@ -25,7 +28,7 @@ const ToppingCard: React.FC<ProductCardProps> = ({ topping, onClick }) => {
                 boxShadow: "0px 4px 12px rgba(26, 26, 30, 0.15)",
                 background: "#FFFFFF",
             }}
-            onClick={onClick}
+            onClick={handleClick}
         >
             <CardActionArea sx={{ height: "100%", p: 0 }}>
                 <Box
@@ -90,14 +93,12 @@ const ToppingCard: React.FC<ProductCardProps> = ({ topping, onClick }) => {
                                 fontSize: "14px",
                                 lineHeight: "20px",
                             }}
-                        >
-                            
-                        </Typography>
+                        ></Typography>
                     </Box>
                 </CardContent>
             </CardActionArea>
         </Card>
     );
-};
+}
 
 export default ToppingCard;

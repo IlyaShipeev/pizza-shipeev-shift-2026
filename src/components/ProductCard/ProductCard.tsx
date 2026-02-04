@@ -18,7 +18,7 @@ interface ProductCardProps {
     product: ProductDto;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+const  ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     const { name, description, sizes, img } = product;
     const [popupOpen, setPopupOpen] = useState(false);
 

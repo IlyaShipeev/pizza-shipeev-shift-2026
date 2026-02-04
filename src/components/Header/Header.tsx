@@ -5,12 +5,13 @@ import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { ROUTES } from "../../constants/routes";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import NavButton from "../ui/NavButton"; // Предполагается, что NavButton в папке ui
+import NavButton from "../ui/NavButton"; 
 import styles from "./Header.module.scss";
-
+import { useSelector } from "react-redux";
+import type{ RootState } from "../../store";
 export default function Header() {
     const navigate = useNavigate();
-    const cartItemsCount = 3;
+    const cartItemsCount = useSelector((state:RootState)=> state.cart.totalQuantity)
 
     return (
         <AppBar position="fixed" className={styles.header}>
